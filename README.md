@@ -65,5 +65,11 @@ Upon completion, the pipeline generates the following files in the `data/` direc
    python main.py
    ```
 
+### 📋 Data Preparation
+Before running the pipeline, ensure your input data is ready:
+1. Place your job advertisements file (in JSONL format) into the `data/` directory.
+2. Rename the file to `jobs.json`.
+3. Ensure the mandatory `data/taxomony.csv` file is also present (this is the ESCO skills list).
+
 ---
 
