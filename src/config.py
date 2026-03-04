@@ -15,7 +15,7 @@ LLM_TEMPERATURE = 0.0
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"        
 
 # Pipeline
-SAMPLE_SIZE = 1000 # number of jobs to process
+SAMPLE_SIZE = 2 # number of jobs to process
 SIMILARITY_THRESHOLD = 0.5
 TOP_K = 3 # number of taxonomy candidates to return for each extracted skill
 

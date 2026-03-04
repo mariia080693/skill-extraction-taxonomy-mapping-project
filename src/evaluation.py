@@ -28,7 +28,7 @@ def precision_at_3(mappings: List[Dict]) -> float:
     judged = [m["judgment"][:3] for m in mappings if "judgment" in m]
     if not judged:
         return 0.0
-    return sum(sum(j) / 3.0 for j in judged) / len(judged)
+    return sum(sum(j) / len(j) for j in judged) / len(judged)
 
 
 def avg_candidates_per_skill(mappings: List[Dict]) -> float:
