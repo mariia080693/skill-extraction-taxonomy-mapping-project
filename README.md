@@ -1,75 +1,144 @@
 # Skill Extraction & Taxonomy Mapping Pipeline
 
-A high-performance NLP pipeline for extracting professional skills from job advertisements and mapping them to the standard **ESCO (European Skills, Competences, Qualifications and Occupations)** taxonomy using semantic vector search.
-
-## 🚀 System Design
-
-The system implements a multi-stage pipeline optimized for semantic alignment.
-
-### 1. Data Ingestion & Preprocessing
-- **Source**: Raw job advertisements in JSONL format.
-- **Cleaning**: HTML sanitization and whitespace normalization using `BeautifulSoup`.
-
-### 2. LLM-Guided Skill Extraction
-- **Engine**: Local LLM (Ollama) via the `instructor` library.
-- **Mechanism**: Structured information extraction using Pydantic schemas. 
-- **Strategy**: Extracts skill/requirement phrases (2-5 words) with surrounding context to maintain semantic integrity.
-
-### 3. Taxonomy Indexing (Vector Database)
-- **Database**: `ChromaDB` (Persistent).
-- **Embeddings**: `all-MiniLM-L6-v2` (Sentence-Transformers) for dense vector representation.
-- **Indexing**: Full-text indexing of ~14k unique ESCO skill labels with HNSW-based cosine similarity search.
-
-### 4. Semantic Mapping
-- **Retrieval**: Top-K vector search against the ChromaDB index.
-- **Filtering**: Dynamic similarity thresholding to maintain high precision.
-- **Alignment**: Candidate retrieval with confidence scores (1 - Cosine Distance).
-
-### 5. Automated Evaluation & Calibration
-- **Ground Truth**: Secondary LLM-as-a-Judge (Llama 3.1) to verify semantic matches.
-- **Metrics**: 
-  - **Precision@1 / Precision@3**: Quantifies accuracy of the top-ranked taxonomy candidates.
-  - **Skills Coverage**: Percentage of extracted skills successfully mapped to at least one verified taxonomy label.
-  - **Job Coverage**: Percentage of job advertisements with at least one verified skill mapping.
-  - **Brier Score**: Measures the calibration of vector similarity scores against ground-truth validation.
-
-## 📊 Outputs
-
-Upon completion, the pipeline generates the following files in the `data/` directory:
-
-| File | Description |
-| :--- | :--- |
-| `final_results.json` | Comprehensive report containing global metrics, configuration parameters, and the final list of mapped skills for each job. |
-| `pipeline_raw.json` | Detailed raw data of all skill pairings and their corresponding LLM judgments (used for debugging and analysis). |
-
-## 🛠 Tech Stack
-
-| Component | Tool / Library |
-| :--- | :--- |
-| **Orchestration** | Python 3.10+ |
-| **LLM Interface** | Ollama, Instructor, Pydantic |
-| **Vector Search** | ChromaDB |
-| **Embeddings** | HuggingFace Sentence-Transformers (`all-MiniLM-L6-v2`) |
-| **Metrics** | NumPy |
-| **UI/UX** | tqdm (Progress tracking) |
-
-## 🏃 Quick Start
-
-1. **Environment Setup**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **LLM Server**: Ensure Ollama is running (`ollama serve`) and the model is pulled (`ollama pull llama3.1:8b`).
-3. **Run Pipeline**:
-   ```bash
-   python main.py
-   ```
-
-### 📋 Data Preparation
-Before running the pipeline, ensure your input data is ready:
-1. Place your job advertisements file (in JSONL format) into the `data/` directory.
-2. Rename the file to `jobs.json`.
-3. Ensure the mandatory `data/taxomony.csv` file is also present (this is the ESCO skills list).
+An NLP pipeline that extracts professional skills from job advertisements and maps them to the **ESCO (European Skills, Competences, Qualifications and Occupations)** taxonomy using LLM-based extraction, semantic vector search, and LLM-as-a-Judge verification.
 
 ---
 
+## Pipeline Overview
+
+```
+jobs.json (JSONL)
+    │
+    ▼
+[1] HTML Cleaning          BeautifulSoup — strips tags, normalises whitespace
+    │
+    ▼
+[2] Skill Extraction       Ollama llama3.1:8b + instructor → ["Python", "team leadership", ...]
+    │
+    ▼
+[3] Vector Search          ChromaDB (all-MiniLM-L6-v2) → top-3 ESCO candidates per skill
+    │
+    ▼
+[4] Threshold Filter       similarity >= 0.5 — removes low-confidence candidates
+    │
+    ▼
+[5] LLM Judge              Ollama llama3.1:8b → [True, False, True] per candidate
+    │
+    ▼
+[6] Evaluation             Precision@1/3, Coverage, Brier Score
+    │
+    ▼
+final_results.json + console report
+```
+
+---
+
+## Project Structure
+
+```
+├── main.py                  # Pipeline entry point
+├── requirements.txt
+├── data/
+│   ├── jobs.json            # Input: job ads (JSONL format)
+│   ├── taxomony.csv         # Input: ESCO taxonomy skills
+│   ├── chroma_db/           # Auto-generated: vector index (cached)
+│   ├── final_results.json   # Output: config + metrics + per-job results
+│   └── results_without_evaluation.json  # Output: raw pairings before metrics
+└── src/
+    ├── config.py            # All constants and paths
+    ├── extraction.py        # LLM skill extraction
+    ├── taxonomy_index.py    # ChromaDB index build/load/search
+    ├── mapping.py           # Vector search + threshold filtering
+    ├── judge.py             # LLM-as-a-Judge verification
+    ├── evaluation.py        # Metrics computation and reporting
+    └── exploration.py       # EDA on jobs and taxonomy data
+```
+
+---
+
+## Metrics
+
+| Metric | Description |
+|---|---|
+| **Precision@1** | % of extracted skills where the top-ranked candidate is verified correct |
+| **Precision@3** | Average fraction of correct candidates across top-3 results |
+| **Skills Coverage** | % of extracted skills with at least 1 verified taxonomy match |
+| **Job Coverage** | % of job ads with at least 1 verified skill mapping |
+| **Brier Score** | Calibration of similarity scores vs judge outcomes (lower = better) |
+| **Confidence (median)** | Median similarity score of the first verified match |
+
+> **Expected**: Precision@1 >= Precision@3 — vector search ranks the best candidate first, so positions 2 and 3 are naturally less accurate.
+
+---
+
+## Configuration
+
+All settings are in [`src/config.py`](src/config.py):
+
+| Parameter | Default | Description |
+|---|---|---|
+| `LLM_MODEL` | `llama3.1:8b` | Ollama model for extraction and judging |
+| `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` | Sentence-Transformers model for vector search |
+| `SIMILARITY_THRESHOLD` | `0.5` | Minimum cosine similarity to accept a candidate |
+| `TOP_K` | `3` | Number of taxonomy candidates retrieved per skill |
+| `SAMPLE_SIZE` | `2` | Number of job ads to process per run |
+
+---
+
+## Tech Stack
+
+| Component | Library |
+|---|---|
+| LLM inference | Ollama + `openai` compatible client |
+| Structured LLM output | `instructor` + `pydantic` |
+| Vector database | `chromadb` |
+| Embeddings | `sentence-transformers` |
+| HTML parsing | `beautifulsoup4` |
+| Metrics | `numpy` |
+| Progress display | `tqdm` |
+
+---
+
+## Quick Start
+
+### 1. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Start Ollama and pull the model
+```bash
+ollama serve
+ollama pull llama3.1:8b
+```
+
+### 3. Prepare data
+Place input files in `data/`:
+- `data/jobs.json` — job advertisements in JSONL format (one JSON object per line)
+- `data/taxomony.csv` — ESCO taxonomy CSV (included)
+
+### 4. Run the pipeline
+```bash
+python main.py
+```
+
+### 5. (Optional) Run data exploration
+```bash
+# From workspace root:
+python -m src.exploration
+
+# Or from src/ folder:
+cd src
+python exploration.py
+```
+
+> The ChromaDB index is built on first run and cached in `data/chroma_db/`. Subsequent runs load it from disk — no re-embedding needed.
+
+---
+
+## Output Files
+
+| File | Contents |
+|---|---|
+| `data/final_results.json` | Config + all metrics + per-job skill mappings |
+| `data/results_without_evaluation.json` | Raw pairings + judgments before metric computation (useful for re-running evaluation without re-calling the LLM) |
