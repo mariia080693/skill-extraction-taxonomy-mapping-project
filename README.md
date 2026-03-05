@@ -127,11 +127,6 @@ python main.py
 # From workspace root:
 python -m src.exploration
 
-# Or from src/ folder:
-cd src
-python exploration.py
-```
-
 > The ChromaDB index is built on first run and cached in `data/chroma_db/`. Subsequent runs load it from disk — no re-embedding needed.
 
 ---
