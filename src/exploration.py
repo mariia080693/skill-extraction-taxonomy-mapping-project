@@ -3,6 +3,8 @@ import csv
 from collections import Counter
 import matplotlib.pyplot as plt
 
+from src.config import JOBS_PATH, TAXONOMY_PATH
+
 # Set a dark gray background for all plots
 plt.rcParams['figure.facecolor'] = '#404040'  # 25% lighter than black
 plt.rcParams['axes.facecolor'] = '#404040'
@@ -20,7 +22,7 @@ print("\nJOBS EXPLORATION:\n")
 
 # --- Load data ---
 jobs = []
-with open("jobs.json", "r", encoding="utf-8") as f:
+with open(JOBS_PATH, "r", encoding="utf-8") as f:
     for line in f:
         jobs.append(json.loads(line))
 
@@ -128,7 +130,7 @@ print("Unique locations:", len(locations), "\n")
 print("\nTAXONOMY EXPLORATION:\n")
 
 taxonomy = []
-with open("taxomony.csv", "r", encoding="utf-8") as f:
+with open(TAXONOMY_PATH, "r", encoding="utf-8") as f:
     for row in csv.DictReader(f):
         taxonomy.append(row)
         

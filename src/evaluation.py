@@ -7,13 +7,19 @@ from typing import Dict, List
 import numpy as np
 
 
+# Helper: extract flat list of all pairings from nested results
+def _get_pairings(results: List[Dict]) -> List[Dict]:
+    return [p for job in results for p in job.get("pairing", [])]
+
 
 # Check if the mapping has at least one candidate confirmed by the judge
 def has_valid_match(mapping: Dict) -> bool:
     return "judgment" in mapping and any(mapping["judgment"])
 
+
 #  Precision@1
-def precision_at_1(mappings: List[Dict]) -> float:
+def precision_at_1(results: List[Dict]) -> float:
+    mappings = _get_pairings(results)
     if not mappings:
         return 0.0
     # A mapping is considered a "hit" if the JUDGE says True to the FIRST candidate
@@ -23,15 +29,19 @@ def precision_at_1(mappings: List[Dict]) -> float:
             hits += 1
     return hits / len(mappings)
 
+
 # Average Precision@3 (based on valid judgments)
-def precision_at_3(mappings: List[Dict]) -> float:
+def precision_at_3(results: List[Dict]) -> float:
+    mappings = _get_pairings(results)
     judged = [m["judgment"][:3] for m in mappings if "judgment" in m]
     if not judged:
         return 0.0
-    return sum(sum(j) / len(j) for j in judged) / len(judged)
+    scores = [sum(j) / len(j) for j in judged if j]  # divide by actual length
+    return sum(scores) / len(judged) if scores else 0.0
 
 
-def avg_candidates_per_skill(mappings: List[Dict]) -> float:
+def avg_candidates_per_skill(results: List[Dict]) -> float:
+    mappings = _get_pairings(results)
     if not mappings:
         return 0.0
     # Only count candidates that were judged as True
@@ -43,20 +53,19 @@ def avg_candidates_per_skill(mappings: List[Dict]) -> float:
 
 
 # Coverage (extracted skills - mapped skills)
-
-def mapping_coverage(mappings: List[Dict]) -> Dict[str, float]:
+def mapping_coverage(results: List[Dict]) -> Dict[str, float]:
+    mappings = _get_pairings(results)
     total = len(mappings)
     mapped = sum(1 for m in mappings if has_valid_match(m))
     return {
-            "skills_total_extracted_job_skills": total,
-            "skills_mapped": mapped,
-            "skills_unmapped": total - mapped,
-            "skills_coverage": round(mapped / total, 4) if total else 0.0,
-        }
+        "skills_total_extracted_job_skills": total,
+        "skills_mapped": mapped,
+        "skills_unmapped": total - mapped,
+        "skills_coverage": round(mapped / total, 4) if total else 0.0,
+    }
 
 
-# Job coverage (percentage of jobs with at least 1 JAUDGED mapped skill)
-
+# Job coverage (percentage of jobs with at least 1 judged mapped skill)
 def job_coverage(results: List[Dict]) -> Dict[str, float]:
     if not results:
         return {
@@ -64,7 +73,7 @@ def job_coverage(results: List[Dict]) -> Dict[str, float]:
             "jobs_with_mappings": 0,
             "job_coverage": 0.0,
         }
-    
+
     total_jobs = len(results)
     jobs_with_mappings = sum(
         1 for job in results
@@ -78,8 +87,8 @@ def job_coverage(results: List[Dict]) -> Dict[str, float]:
 
 
 # Confidence distribution (median confidence of the BEST JUDGED match)
-
-def confidence_stats(mappings: List[Dict]) -> Dict[str, float]:
+def confidence_stats(results: List[Dict]) -> Dict[str, float]:
+    mappings = _get_pairings(results)
     scores = []
     for m in mappings:
         if has_valid_match(m):
@@ -88,7 +97,7 @@ def confidence_stats(mappings: List[Dict]) -> Dict[str, float]:
                 if is_match and i < len(m["candidates"]):
                     scores.append(m["candidates"][i]["score"])
                     break
-                    
+
     if not scores:
         return {"median": 0}
     arr = np.array(scores)
@@ -98,37 +107,35 @@ def confidence_stats(mappings: List[Dict]) -> Dict[str, float]:
 
 
 # Brier calibration score (Mean Squared Error between confidence and judgment)
-def brier_score(mappings: List[Dict]) -> float:
-
+def brier_score(results: List[Dict]) -> float:
+    mappings = _get_pairings(results)
     squared_errors = []
     for m in mappings:
         candidates = m.get("candidates", [])
         judgments = m.get("judgment", [])
-        
+
         for i, c in enumerate(candidates):
             # Outcome is 1.0 if judgment is True, else 0.0
             outcome = 1.0 if (i < len(judgments) and judgments[i]) else 0.0
             confidence = c["score"]
             squared_errors.append((confidence - outcome) ** 2)
-            
+
     if not squared_errors:
         return 0.0
-        
+
     return round(sum(squared_errors) / len(squared_errors), 4)
 
 
 # A full evaluation report
-
-def full_report(all_pairing: List[Dict], results: List[Dict], threshold: float) -> Dict:
-
+def full_report(results: List[Dict], threshold: float) -> Dict:
     return {
-        "precision@1": precision_at_1(all_pairing),
-        "precision@3": precision_at_3(all_pairing),
-        "avg_candidates": avg_candidates_per_skill(all_pairing),
-        "skills_coverage": mapping_coverage(all_pairing),
+        "precision@1": precision_at_1(results),
+        "precision@3": precision_at_3(results),
+        "avg_candidates": avg_candidates_per_skill(results),
+        "skills_coverage": mapping_coverage(results),
         "job_coverage": job_coverage(results),
-        "confidence": confidence_stats(all_pairing),
-        "brier_score": brier_score(all_pairing),
+        "confidence": confidence_stats(results),
+        "brier_score": brier_score(results),
     }
 
 

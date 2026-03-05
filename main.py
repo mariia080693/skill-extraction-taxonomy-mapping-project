@@ -15,7 +15,7 @@ from src.config import (
     RESULTS_PATH,
     SAMPLE_SIZE,
     SIMILARITY_THRESHOLD,
-    PIPELINE_RAW_PATH,
+    RESULTS_NO_EVALUATION_PATH,
 )
 from src.evaluation import full_report, print_report, print_sample_mappings
 from src.extraction import extract_skills
@@ -68,7 +68,6 @@ def main():
     # 3. Process jobs
     print("\n[3/5] Extracting skills & mapping to taxonomy")
     results = []     # List of Jobs (metadata + all skill pairings) 
-    all_pairing = [] # Flat list of all skill pairings across all jobs
     
     start_time = time.time()
     
@@ -76,7 +75,6 @@ def main():
         try:
             result = process_job(job, index)
             results.append(result)
-            all_pairing.extend(result["pairing"])
         except Exception as e:
             print(f"Skipped job {job.get('id')}: {e}")
 
@@ -89,6 +87,7 @@ def main():
     
     start_time = time.time()
     
+    all_pairing = [p for job in results for p in job.get("pairing", [])]
     for p in tqdm(all_pairing, desc="Judging"):
         if p.get("candidates"):
              # p is a dict ref
@@ -103,15 +102,14 @@ def main():
     
     # Save raw data for reuse
     raw_output = {
-        "results": results,
-        "all_pairing": all_pairing
+        "results_before_evaluation": results,
     }
     
-    with open(PIPELINE_RAW_PATH, "w", encoding="utf-8") as f:
+    with open(RESULTS_NO_EVALUATION_PATH, "w", encoding="utf-8") as f:
         json.dump(raw_output, f, indent=2, ensure_ascii=False)
-    print(f"Raw pipeline data saved → {PIPELINE_RAW_PATH}")
+    print(f"Results without evaluation saved → {RESULTS_NO_EVALUATION_PATH}")
 
-    report = full_report(all_pairing, results, threshold=SIMILARITY_THRESHOLD)
+    report = full_report(results, threshold=SIMILARITY_THRESHOLD)
     
     # Save results
     output = {

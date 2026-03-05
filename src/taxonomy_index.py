@@ -56,9 +56,11 @@ class TaxonomyIndex:
     @property
     def total_skills(self) -> int:
         return self.collection.count()
+    
+    
 
     # Build from scratch
-
+    
     @classmethod
     def build(cls, taxonomy: List[Dict[str, str]] | None = None) -> "TaxonomyIndex":
         """Embed every unique skill label and upsert into ChromaDB."""
@@ -66,7 +68,7 @@ class TaxonomyIndex:
             taxonomy = load_taxonomy()
 
         skills = unique_skills_with_metadata(taxonomy)
-        print("  Embedding", format(len(skills), ","), "unique skill labels …")
+        print(" Embedding", format(len(skills), ","), "unique skill labels …")
 
         embed_fn = SentenceTransformerEmbeddingFunction(
             model_name=EMBEDDING_MODEL,
@@ -105,8 +107,9 @@ class TaxonomyIndex:
         print("  Collection saved →", CHROMA_DIR + "/", "(" + str(collection.count()) + " skills)")
         return cls(collection)
 
-    # Load from disk
 
+    # Load from disk
+    
     @classmethod
     def load(cls) -> "TaxonomyIndex":
         """Load a previously-built ChromaDB collection."""
@@ -119,6 +122,8 @@ class TaxonomyIndex:
             embedding_function=embed_fn,
         )
         return cls(collection)
+    
+    
     
     # Load existing collection or build a new one
     @classmethod
@@ -165,7 +170,6 @@ class TaxonomyIndex:
         output = []
         if results["documents"] and results["distances"]:
             for doc, dist in zip(results["documents"][0], results["distances"][0]):
-                # ChromaDB returns cosine *distance*; similarity = 1 - distance
                 similarity = 1.0 - dist
                 output.append((doc, similarity))
         return output

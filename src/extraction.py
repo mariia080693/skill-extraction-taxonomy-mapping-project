@@ -24,7 +24,7 @@ def clean_html(raw_html: str) -> str:
     return re.sub(r"\s+", " ", text).strip() # normalize whitespace
 
 
-#  LLM client. To avoid creating a new LLM client every time when doing extraction for jobs
+#  LLM client
 
 _client: OpenAI | None = None
 

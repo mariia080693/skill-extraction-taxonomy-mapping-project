@@ -4,7 +4,7 @@ TAXONOMY_PATH = "data/taxomony.csv"
 CHROMA_DIR = "data/chroma_db"          
 CHROMA_COLLECTION = "taxonomy"    # ChromaDB collection name
 RESULTS_PATH = "data/final_results.json"
-PIPELINE_RAW_PATH = "data/pipeline_raw.json"
+RESULTS_NO_EVALUATION_PATH = "data/results_without_evaluation.json"
 
 # LLM (Ollama) to avoid API costs
 LLM_BASE_URL = "http://localhost:11434/v1" 

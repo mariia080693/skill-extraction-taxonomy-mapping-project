@@ -1,0 +1,768 @@
+{
+  "results_before_evaluation": [
+    {
+      "job_id": "38915469",
+      "title": "Recruitment Consultant",
+      "pairing": [
+        {
+          "extracted_job_skill": "Building relationships",
+          "candidates": [
+            {
+              "label": "build business relationships",
+              "score": 0.78
+            },
+            {
+              "label": "relationship marketing",
+              "score": 0.703
+            },
+            {
+              "label": "manage student relationships",
+              "score": 0.675
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Identifying client issues",
+          "candidates": [
+            {
+              "label": "analyse data about clients",
+              "score": 0.735
+            },
+            {
+              "label": "identify clients' needs",
+              "score": 0.685
+            },
+            {
+              "label": "manage difficult clients",
+              "score": 0.673
+            }
+          ],
+          "judgment": [
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Representing Pulse Child Care Crew",
+          "candidates": []
+        },
+        {
+          "extracted_job_skill": "Managing recruitment processes",
+          "candidates": [
+            {
+              "label": "recruit employees",
+              "score": 0.678
+            },
+            {
+              "label": "recruit personnel",
+              "score": 0.63
+            },
+            {
+              "label": "management department processes",
+              "score": 0.597
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Developing candidate strategy",
+          "candidates": [
+            {
+              "label": "assess candidates",
+              "score": 0.694
+            },
+            {
+              "label": "develop strategy to solve problems",
+              "score": 0.545
+            },
+            {
+              "label": "develop campaigns",
+              "score": 0.542
+            }
+          ],
+          "judgment": [
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Coordinating resources",
+          "candidates": [
+            {
+              "label": "manage resources",
+              "score": 0.669
+            },
+            {
+              "label": "perform resource planning",
+              "score": 0.642
+            },
+            {
+              "label": "plan resource allocation",
+              "score": 0.54
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Attending client visits",
+          "candidates": [
+            {
+              "label": "monitor visitor tours",
+              "score": 0.612
+            },
+            {
+              "label": "plan customers' sales visits",
+              "score": 0.584
+            },
+            {
+              "label": "escort visitors to places of interest",
+              "score": 0.564
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Understanding client requirements",
+          "candidates": [
+            {
+              "label": "identify clients' needs",
+              "score": 0.744
+            },
+            {
+              "label": "identify customer requirements",
+              "score": 0.655
+            },
+            {
+              "label": "advise client on technical possibilities",
+              "score": 0.644
+            }
+          ],
+          "judgment": [
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Ambassador at career fairs",
+          "candidates": [
+            {
+              "label": "recruit student ambassador",
+              "score": 0.68
+            },
+            {
+              "label": "attend trade fairs",
+              "score": 0.621
+            }
+          ],
+          "judgment": [
+            true,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "International development",
+          "candidates": [
+            {
+              "label": "international development",
+              "score": 1.0
+            },
+            {
+              "label": "build international relations",
+              "score": 0.675
+            },
+            {
+              "label": "international business",
+              "score": 0.67
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Travel opportunities",
+          "candidates": [
+            {
+              "label": "analyse travel alternatives",
+              "score": 0.763
+            },
+            {
+              "label": "provide advice on travel destinations",
+              "score": 0.749
+            },
+            {
+              "label": "develop tourism destinations",
+              "score": 0.674
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Business development",
+          "candidates": [
+            {
+              "label": "align efforts towards business development",
+              "score": 0.724
+            },
+            {
+              "label": "develop business case",
+              "score": 0.722
+            },
+            {
+              "label": "develop business plans",
+              "score": 0.704
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Ambition",
+          "candidates": [
+            {
+              "label": "identify with the company's goals",
+              "score": 0.519
+            }
+          ],
+          "judgment": [
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Focus",
+          "candidates": [
+            {
+              "label": "focus lighting equipment",
+              "score": 0.6
+            },
+            {
+              "label": "focus stage lights",
+              "score": 0.556
+            }
+          ],
+          "judgment": [
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Drive",
+          "candidates": [
+            {
+              "label": "drive vehicles",
+              "score": 0.724
+            },
+            {
+              "label": "drive in urban areas",
+              "score": 0.608
+            },
+            {
+              "label": "drive carriage",
+              "score": 0.59
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Enthusiasm",
+          "candidates": [
+            {
+              "label": "exude enthusiasm during the action sessions",
+              "score": 0.621
+            },
+            {
+              "label": "inspire enthusiasm for dance",
+              "score": 0.603
+            },
+            {
+              "label": "inspire enthusiasm for nature",
+              "score": 0.596
+            }
+          ],
+          "judgment": [
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Professionalism",
+          "candidates": [
+            {
+              "label": "show professional responsibility",
+              "score": 0.632
+            },
+            {
+              "label": "cooperate with professionals",
+              "score": 0.597
+            },
+            {
+              "label": "interact professionally in research and professional environments",
+              "score": 0.584
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Expertise",
+          "candidates": [
+            {
+              "label": "category specific expertise",
+              "score": 0.719
+            },
+            {
+              "label": "training subject expertise",
+              "score": 0.694
+            },
+            {
+              "label": "provide technical expertise",
+              "score": 0.652
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Career progression",
+          "candidates": [
+            {
+              "label": "advise on career",
+              "score": 0.592
+            },
+            {
+              "label": "develop opportunities for progression in sport",
+              "score": 0.569
+            },
+            {
+              "label": "manage professional transition in an arts career",
+              "score": 0.565
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Recession proof",
+          "candidates": []
+        },
+        {
+          "extracted_job_skill": "Global organisation",
+          "candidates": [
+            {
+              "label": "represent the organisation",
+              "score": 0.641
+            },
+            {
+              "label": "organisational structure",
+              "score": 0.626
+            },
+            {
+              "label": "organisational policies",
+              "score": 0.591
+            }
+          ],
+          "judgment": [
+            false,
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "job_id": "38934839",
+      "title": "Computers Salesperson - Coburg",
+      "pairing": [
+        {
+          "extracted_job_skill": "Passion for retail",
+          "candidates": [
+            {
+              "label": "demonstrate motivation for sales",
+              "score": 0.585
+            },
+            {
+              "label": "plan retail space",
+              "score": 0.54
+            }
+          ],
+          "judgment": [
+            true,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Customer service skills",
+          "candidates": [
+            {
+              "label": "teach customer service techniques",
+              "score": 0.769
+            },
+            {
+              "label": "customer service",
+              "score": 0.708
+            },
+            {
+              "label": "assist customers",
+              "score": 0.686
+            }
+          ],
+          "judgment": [
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Communication skills",
+          "candidates": [
+            {
+              "label": "communication",
+              "score": 0.703
+            },
+            {
+              "label": "apply technical communication skills",
+              "score": 0.688
+            },
+            {
+              "label": "communication studies",
+              "score": 0.68
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Team environment",
+          "candidates": [
+            {
+              "label": "team building",
+              "score": 0.739
+            },
+            {
+              "label": "manage teamwork",
+              "score": 0.666
+            },
+            {
+              "label": "manage a team",
+              "score": 0.644
+            }
+          ],
+          "judgment": [
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Technology and Entertainment product knowledge",
+          "candidates": [
+            {
+              "label": "entertainment industry",
+              "score": 0.63
+            },
+            {
+              "label": "business knowledge",
+              "score": 0.621
+            },
+            {
+              "label": "develop entertainment programmes",
+              "score": 0.6
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Customer focused",
+          "candidates": [
+            {
+              "label": "customer insight",
+              "score": 0.688
+            },
+            {
+              "label": "assess customers",
+              "score": 0.657
+            },
+            {
+              "label": "satisfy customers",
+              "score": 0.632
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Problem solving",
+          "candidates": [
+            {
+              "label": "create solutions to problems",
+              "score": 0.726
+            },
+            {
+              "label": "develop strategy to solve problems",
+              "score": 0.686
+            },
+            {
+              "label": "problem-solving with digital tools",
+              "score": 0.664
+            }
+          ],
+          "judgment": [
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Resolving customer complaints",
+          "candidates": [
+            {
+              "label": "handle customer complaints",
+              "score": 0.919
+            },
+            {
+              "label": "handle complaints",
+              "score": 0.775
+            },
+            {
+              "label": "investigate complaints related to consumer protection",
+              "score": 0.723
+            }
+          ],
+          "judgment": [
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Quick decision making",
+          "candidates": [
+            {
+              "label": "make time-critical decisions",
+              "score": 0.585
+            },
+            {
+              "label": "participatory decision-making",
+              "score": 0.58
+            },
+            {
+              "label": "consider economic criteria in decision making",
+              "score": 0.544
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Exceeding sales targets",
+          "candidates": [
+            {
+              "label": "achieve sales targets",
+              "score": 0.75
+            },
+            {
+              "label": "set sales goals",
+              "score": 0.633
+            },
+            {
+              "label": "motivate staff to reach sales targets",
+              "score": 0.63
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Flexibility across retail trading hours",
+          "candidates": []
+        },
+        {
+          "extracted_job_skill": "Generous staff discounts",
+          "candidates": [
+            {
+              "label": "manage staff",
+              "score": 0.552
+            },
+            {
+              "label": "analyse staff capacity",
+              "score": 0.519
+            }
+          ],
+          "judgment": [
+            false,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Commission based structures",
+          "candidates": [
+            {
+              "label": "commission set construction",
+              "score": 0.785
+            },
+            {
+              "label": "commission evaluation",
+              "score": 0.662
+            },
+            {
+              "label": "organisational structure",
+              "score": 0.561
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Incentive based promotions",
+          "candidates": [
+            {
+              "label": "set sales promotions",
+              "score": 0.754
+            },
+            {
+              "label": "keep promotions records",
+              "score": 0.686
+            },
+            {
+              "label": "help coordinate promotional activities",
+              "score": 0.664
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "extracted_job_skill": "Career progression",
+          "candidates": [
+            {
+              "label": "advise on career",
+              "score": 0.592
+            },
+            {
+              "label": "develop opportunities for progression in sport",
+              "score": 0.569
+            },
+            {
+              "label": "manage professional transition in an arts career",
+              "score": 0.565
+            }
+          ],
+          "judgment": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Professional development",
+          "candidates": [
+            {
+              "label": "manage personal professional development",
+              "score": 0.802
+            },
+            {
+              "label": "conduct continuing professional development workshops",
+              "score": 0.69
+            },
+            {
+              "label": "undertake continuous professional development in social work",
+              "score": 0.679
+            }
+          ],
+          "judgment": [
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "extracted_job_skill": "Flexible work environment",
+          "candidates": [
+            {
+              "label": "prepare personal work environment",
+              "score": 0.62
+            },
+            {
+              "label": "perform services in a flexible manner",
+              "score": 0.57
+            },
+            {
+              "label": "work ergonomically",
+              "score": 0.557
+            }
+          ],
+          "judgment": [
+            false,
+            true,
+            false
+          ]
+        }
+      ]
+    }
+  ]
+}
