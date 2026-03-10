@@ -20,14 +20,12 @@ def has_valid_match(mapping: Dict) -> bool:
 #  Precision@1
 def precision_at_1(results: List[Dict]) -> float:
     mappings = _get_pairings(results)
-    if not mappings:
+    # Only consider mappings that have judgments
+    judged = [m for m in mappings if "judgment" in m and m["judgment"]]
+    if not judged:
         return 0.0
-    # A mapping is considered a "hit" if the JUDGE says True to the FIRST candidate
-    hits = 0
-    for m in mappings:
-        if "judgment" in m and m["judgment"] and m["judgment"][0]:
-            hits += 1
-    return hits / len(mappings)
+    hits = sum(1 for m in judged if m["judgment"][0])
+    return hits / len(judged)
 
 
 # Average Precision@3 (based on valid judgments)
@@ -37,7 +35,7 @@ def precision_at_3(results: List[Dict]) -> float:
     if not judged:
         return 0.0
     scores = [sum(j) / len(j) for j in judged if j]  # divide by actual length
-    return sum(scores) / len(judged) if scores else 0.0
+    return sum(scores) / 3 if scores else 0.0
 
 
 def avg_candidates_per_skill(results: List[Dict]) -> float:
